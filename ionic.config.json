@@ -1,0 +1,7 @@
+{
+  "name": "Projet-pizza-ionic1",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "angular"
+}

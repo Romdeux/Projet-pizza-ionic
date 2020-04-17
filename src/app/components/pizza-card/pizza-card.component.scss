@@ -1,0 +1,17 @@
+ion-card-header {
+    display: flex;
+    justify-content: space-around;
+}
+
+.pizzasName {
+    margin-bottom: 3%;
+}
+
+.add-pizza {
+    display: flex;
+    margin: 3% 0% 3% 80%;
+
+    ion-label {
+        margin: auto 10%;
+    }
+}

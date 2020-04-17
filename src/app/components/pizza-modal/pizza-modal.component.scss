@@ -1,0 +1,26 @@
+ion-fab-button {
+    margin: 3% 0 3% 85%;
+}
+
+.add-pizza {
+    display: flex;
+    margin: 3% 0% 3% 80%;
+
+    ion-label {
+        margin: auto 10%;
+    }
+}
+
+ion-card-subtitle {
+
+    &.pizzasName {
+        margin-bottom: 3%;
+    }
+
+    width: fit-content;
+    font-size: 1.5em;
+    padding: 7px;
+    border-bottom: 1px solid #428cff;
+    border-left: 1px solid #428cff;
+    // border-radius: 15px;
+}
