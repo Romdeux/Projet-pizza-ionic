@@ -18,6 +18,10 @@
   </ion-header>
 
   <div id="container">
-    <app-pizza-card></app-pizza-card>
+    <app-pizza-card *ngFor="let item of pizzas" [pizza]="item" [showPizzaId]="pizzaId">{{ pizza ? pizza : '-' }}
+    </app-pizza-card>
+    <ng-template #errorContent>
+      <p><span style="color: red;">{{error}}</span></p>
+    </ng-template>
   </div>
 </ion-content>

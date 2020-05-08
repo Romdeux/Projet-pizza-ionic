@@ -5,17 +5,13 @@
     </div>
 
     <div (click)="presentModal()">
-        <img src="../../assets/img/pizzas/pizzas.jpg" />
+        <img [src]="pizza.photo" />
         <ion-card-header>
             <div>
-                <ion-card-subtitle class="pizzasName">Pizza's name</ion-card-subtitle>
-                <ion-card-title>15€</ion-card-title>
+                <ion-card-subtitle class="pizzasName">{{ pizza.nom }}</ion-card-subtitle>
+                <ion-card-title>{{ pizza.prix }} €</ion-card-title>
             </div>
         </ion-card-header>
-        <ion-card-content>
-            Founded in 1829 on an isthmus between Lake Monona and Lake Mendota, Madison was named the capital of the
-            Wisconsin Territory in 1836.
-        </ion-card-content>
     </div>
     <!-- <app-modal-page></app-modal-page> -->
 </ion-card>
