@@ -1,4 +1,4 @@
-<ion-header [translucent]="true">
+<ion-header class="header" [translucent]="true">
   <ion-toolbar>
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
@@ -6,6 +6,7 @@
     <ion-title>{{ folder }}</ion-title>
   </ion-toolbar>
   <ion-fab-button (click)="presentModal()" class=" cart_button">
+    <ion-badge color="primary">11</ion-badge>
     <ion-icon name="cart-outline"></ion-icon>
   </ion-fab-button>
 </ion-header>

@@ -21,7 +21,7 @@ export class IngredientService {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
 
-  url = 'https://api.ynov.jcatania.io/pizza';
+  url = 'https://api.ynov.jcatania.io/ingredient';
 
   addIngredient(pizza: Ingredient): Observable<any> {
     return this.http.post<Ingredient>(this.url, pizza, this.httpHeader)

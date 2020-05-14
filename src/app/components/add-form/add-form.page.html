@@ -1,0 +1,34 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button [text]="buttonText" [icon]="buttonIcon">
+      </ion-back-button>
+    </ion-buttons>
+
+    <ion-title>Ajouter une pizza</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form action="">
+    <ion-item>
+      <ion-label position="floating">Nom</ion-label>
+      <ion-input></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Photo</ion-label>
+      <ion-input></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Prix</ion-label>
+      <ion-input type="number"></ion-input>
+    </ion-item>
+
+    <ion-list>
+      <ion-item *ngFor="let ingredient of ingredients">
+        <ion-label>{{ ingredient.nom }}</ion-label>
+        <ion-checkbox name="ingredient" slot="end" [(ngModel)]="ingredient.isChecked"></ion-checkbox>
+      </ion-item>
+    </ion-list>
+  </form>
+</ion-content>

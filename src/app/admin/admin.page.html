@@ -1,3 +1,66 @@
-<p>
-  admin works!
-</p>
+<ion-header class="header" [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>{{ folder }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">{{ folder }}</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <div id="container" class="pizza_container">
+    <h1>Pizza</h1>
+
+    <div>
+      <ion-button [routerLink]="['/add-form']">
+        ajouter une pizza
+      </ion-button>
+    </div>
+
+    <div *ngFor="let pizza of pizzas">
+      <ion-item>
+        <ion-label>
+          {{ pizza.nom }}
+          <div>
+            <ion-button><ion-icon name="create-outline"></ion-icon></ion-button>
+            <ion-button (click)="presentModal()"><ion-icon name="trash-outline"></ion-icon></ion-button>
+          </div>
+        </ion-label>
+      </ion-item>
+    </div>
+    <ng-template #errorContent>
+      <p><span style="color: red;">{{error}}</span></p>
+    </ng-template>
+  </div>
+
+  <div id="container" class="ingredient_container">
+    <h1>Ingredients</h1>
+    
+    <div>
+      <ion-button [routerLink]="['/add-form']">
+        ajouter une pizza
+      </ion-button>
+    </div>
+    
+    <div *ngFor="let ingredient of ingredients">
+      <ion-item>
+        <ion-label>
+          {{ ingredient.nom }}
+          <div>
+            <ion-button><ion-icon name="create-outline"></ion-icon></ion-button>
+            <ion-button><ion-icon name="trash-outline"></ion-icon></ion-button>
+          </div>
+        </ion-label>
+      </ion-item>
+    </div>
+    <ng-template #errorContent>
+      <p><span style="color: red;">{{error}}</span></p>
+    </ng-template>
+  </div>
+</ion-content>
