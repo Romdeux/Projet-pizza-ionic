@@ -23,8 +23,8 @@ export class IngredientService {
 
   url = 'https://api.ynov.jcatania.io/ingredient';
 
-  addIngredient(pizza: Ingredient): Observable<any> {
-    return this.http.post<Ingredient>(this.url, pizza, this.httpHeader)
+  addIngredient(ingredient: Ingredient): Observable<any> {
+    return this.http.post<Ingredient>(this.url, ingredient, this.httpHeader)
       .pipe(
         catchError(this.handleError<Ingredient>('Add Ingredient'))
       );
@@ -34,7 +34,7 @@ export class IngredientService {
     return this.http.get<Ingredient[]>(this.url + id)
       .pipe(
         tap(_ => console.log(`Ingredient fetched: ${id}`)),
-        catchError(this.handleError<Ingredient[]>(`Get pizza id=${id}`))
+        catchError(this.handleError<Ingredient[]>(`Get ingredient id=${id}`))
       );
   }
 
@@ -42,15 +42,15 @@ export class IngredientService {
     return this.http.get<Ingredient[]>(this.url)
       .pipe(
         tap(Ingredient => console.log('Ingredient fetched!')),
-        catchError(this.handleError<Ingredient[]>('Get pizza', []))
+        catchError(this.handleError<Ingredient[]>('Get ingredient', []))
       );
   }
 
-  updateIngredient(id, pizza: Ingredient): Observable<any> {
-    return this.http.put(this.url + id, pizza, this.httpHeader)
+  updateIngredient(id, ingredient: Ingredient): Observable<any> {
+    return this.http.put(this.url + id, ingredient, this.httpHeader)
       .pipe(
         tap(_ => console.log(`Ingredient updated: ${id}`)),
-        catchError(this.handleError<Ingredient[]>('Update pizza'))
+        catchError(this.handleError<Ingredient[]>('Update ingredient'))
       );
   }
 
@@ -58,7 +58,7 @@ export class IngredientService {
     return this.http.delete<Ingredient[]>(this.url + id, this.httpHeader)
       .pipe(
         tap(_ => console.log(`Ingredient deleted: ${id}`)),
-        catchError(this.handleError<Ingredient[]>('Delete pizza'))
+        catchError(this.handleError<Ingredient[]>('Delete ingredient'))
       );
   }
 

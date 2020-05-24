@@ -13,22 +13,42 @@
   <form action="">
     <ion-item>
       <ion-label position="floating">Nom</ion-label>
-      <ion-input></ion-input>
+      <ion-input value="{{ pizza ? pizza.nom : '' }}"> </ion-input>
     </ion-item>
     <ion-item>
       <ion-label position="floating">Photo</ion-label>
-      <ion-input></ion-input>
+      <ion-input value="{{ pizza ? pizza.photo : '' }}"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label position="floating">Prix</ion-label>
-      <ion-input type="number"></ion-input>
+      <ion-input value="{{ pizza ? pizza.prix : '' }}" type="number"></ion-input>
     </ion-item>
 
+    <ion-item>
+      <ion-label class="title">Ingredients</ion-label>
+    </ion-item>
+    <ion-list *ngIf="pizza">
+      <ion-item>
+        <ion-label class="title">Ingrédients actuels</ion-label>
+      </ion-item>
+      <ion-item class="ingredients" *ngFor="let ingredientPizza of pizza.ingredients">
+        <ion-label>{{ ingredientPizza }}</ion-label>
+        <ion-checkbox checked="true" name="ingredient" slot="end">
+        </ion-checkbox>
+      </ion-item>
+    </ion-list>
     <ion-list>
-      <ion-item *ngFor="let ingredient of ingredients">
+      <ion-item>
+        <ion-label class="title">Ingrédients disponibles</ion-label>
+      </ion-item>
+      <ion-item class="ingredients" *ngFor="let ingredient of ingredients">
         <ion-label>{{ ingredient.nom }}</ion-label>
         <ion-checkbox name="ingredient" slot="end" [(ngModel)]="ingredient.isChecked"></ion-checkbox>
       </ion-item>
     </ion-list>
+
+    <ion-button color="primary" slot="end">
+      Valider
+    </ion-button>
   </form>
 </ion-content>

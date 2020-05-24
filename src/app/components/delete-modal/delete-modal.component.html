@@ -1,9 +1,11 @@
 <ion-content>
   <div class="content">
-    Etes-vous sûr de vouloir supprimer cette pizza ?
+    <div *ngIf="pizza.nom">
+      Etes-vous sûr de vouloir supprimer {{ pizza.nom }}?
+    </div>
     <div>
       <ion-button color="danger">Oui</ion-button>
-      <ion-button color="light">Non</ion-button>
+      <ion-button color="light" (click)="closeModal()">Non</ion-button>
     </div>
   </div>
 </ion-content>

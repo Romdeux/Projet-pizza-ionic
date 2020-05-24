@@ -28,8 +28,12 @@
         <ion-label>
           {{ pizza.nom }}
           <div>
-            <ion-button><ion-icon name="create-outline"></ion-icon></ion-button>
-            <ion-button (click)="presentModal()"><ion-icon name="trash-outline"></ion-icon></ion-button>
+            <ion-button (click)="editPizza(pizza)">
+              <ion-icon name="create-outline"></ion-icon>
+            </ion-button>
+            <ion-button (click)="presentModal(pizza)">
+              <ion-icon name="trash-outline"></ion-icon>
+            </ion-button>
           </div>
         </ion-label>
       </ion-item>
@@ -41,20 +45,31 @@
 
   <div id="container" class="ingredient_container">
     <h1>Ingredients</h1>
-    
+
     <div>
-      <ion-button [routerLink]="['/add-form']">
-        ajouter une pizza
-      </ion-button>
+      <form action="" (ngSubmit)="addIngredient(ingredient)">
+        <ion-item>
+          <ion-label position="floating">Ajouter un ingrédient</ion-label>
+          <ion-input id="ingredient" name="ingredient" [(ngModel)]="ingredient" placeholder="concombre">
+          </ion-input>
+        </ion-item>
+        <ion-button type="submit">
+          <ion-icon name="checkmark-outline"></ion-icon>
+        </ion-button>
+      </form>
     </div>
-    
+
     <div *ngFor="let ingredient of ingredients">
       <ion-item>
         <ion-label>
           {{ ingredient.nom }}
           <div>
-            <ion-button><ion-icon name="create-outline"></ion-icon></ion-button>
-            <ion-button><ion-icon name="trash-outline"></ion-icon></ion-button>
+            <ion-button>
+              <ion-icon name="create-outline"></ion-icon>
+            </ion-button>
+            <ion-button (click)="presentModal(ingredient)">
+              <ion-icon name="trash-outline"></ion-icon>
+            </ion-button>
           </div>
         </ion-label>
       </ion-item>

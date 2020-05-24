@@ -13,11 +13,9 @@ export class DeleteModalComponent implements OnInit {
     private modalController: ModalController,
   ) { }
 
-  @Input() pizza: Pizza;
-  
-  ngOnInit() {}
+  ngOnInit() { }
 
   closeModal() {
     this.modalController.dismiss();
-}
+  }
 }

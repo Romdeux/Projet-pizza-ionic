@@ -1,8 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { PizzaService, Pizza } from '../services/pizzas/pizza.service';
 import { IngredientService, Ingredient } from '../services/ingredients/ingredient.service';
-import { HttpClient } from '@angular/common/http';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router, NavigationExtras } from '@angular/router';
 import { LoadingController, ModalController } from '@ionic/angular';
 import { DeleteModalComponent } from '../components/delete-modal/delete-modal.component';
 
@@ -21,6 +20,7 @@ export class AdminPage implements OnInit {
   error: string;
   loading: boolean;
   @Input() pizza: Pizza;
+  // ingredient: Ingredient["name"];
 
   constructor(
     private pizzaService: PizzaService,
@@ -28,8 +28,9 @@ export class AdminPage implements OnInit {
     private activatedRoute: ActivatedRoute,
     public loadingController: LoadingController,
     public modalController: ModalController,
-    private http: HttpClient,
-  ){
+    public router: Router,
+  ) {
+
     this.activatedRoute.params.subscribe((params) => {
       this.pizzaId = params.id;
       this.ingredientId = params.id;
@@ -38,17 +39,18 @@ export class AdminPage implements OnInit {
     this.error = '';
   }
 
-  async presentModal(): Promise<void> {
+  async presentModal(pizza: Pizza): Promise<void> {
     const modal = await this.modalController.create({
-        component: DeleteModalComponent,
-        componentProps: {
-            "pizza": this.pizza,
-        },
-        cssClass: 'delete-modal'
-        // componentProps: { accounts: this.accountList },
+      component: DeleteModalComponent,
+      componentProps: {
+        "pizza": pizza,
+      },
+      cssClass: 'delete-modal'
+      // componentProps: { accounts: this.accountList },
     });
     return await modal.present();
-}
+
+  }
 
   async ngOnInit() {
     this.admin = this.activatedRoute.snapshot.paramMap.get('id');
@@ -59,6 +61,26 @@ export class AdminPage implements OnInit {
     this.ingredients = await this.ingredientsService.getIngredientList().toPromise();
 
     this.loading = false;
+  }
+
+  editPizza(pizza: Pizza) {
+
+    let pizzaStringify = JSON.stringify(pizza);
+    let navigationExtras: NavigationExtras = {
+      queryParams: {
+        "pizza": pizzaStringify
+      }
+    };
+    this.router.navigate(["/add-form"], navigationExtras);
+  }
+
+  addIngredient(ingredient: Ingredient) {
+    console.log(ingredient);
+    this.ingredientsService.addIngredient(ingredient);
+  }
+
+  deleteIngredient(ingredient: Ingredient) {
+    this.ingredientsService.deleteIngredient(ingredient.id)
   }
 
 }
