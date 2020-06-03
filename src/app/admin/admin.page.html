@@ -18,7 +18,7 @@
     <h1>Pizza</h1>
 
     <div>
-      <ion-button [routerLink]="['/add-form']">
+      <ion-button [routerLink]="'/add-form/new'">
         ajouter une pizza
       </ion-button>
     </div>
@@ -28,7 +28,7 @@
         <ion-label>
           {{ pizza.nom }}
           <div>
-            <ion-button (click)="editPizza(pizza)">
+            <ion-button [routerLink]="'/add-form/' + pizza.id">
               <ion-icon name="create-outline"></ion-icon>
             </ion-button>
             <ion-button (click)="presentModal(pizza)">
@@ -47,10 +47,10 @@
     <h1>Ingredients</h1>
 
     <div>
-      <form action="" (ngSubmit)="addIngredient(ingredient)">
+      <form action="" (ngSubmit)="addIngredient()">
         <ion-item>
           <ion-label position="floating">Ajouter un ingrédient</ion-label>
-          <ion-input id="ingredient" name="ingredient" [(ngModel)]="ingredient" placeholder="concombre">
+          <ion-input id="ingredient" name="ingredient" [(ngModel)]="newIngredient.nom" placeholder="concombre">
           </ion-input>
         </ion-item>
         <ion-button type="submit">
@@ -67,7 +67,7 @@
             <ion-button>
               <ion-icon name="create-outline"></ion-icon>
             </ion-button>
-            <ion-button (click)="presentModal(ingredient)">
+            <ion-button (click)="presentModal(ingredient, true)">
               <ion-icon name="trash-outline"></ion-icon>
             </ion-button>
           </div>

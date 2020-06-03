@@ -9,7 +9,7 @@ import { catchError, tap } from 'rxjs/operators';
 
 export class Ingredient {
   id: string;
-  name: string;
+  nom: string;
 }
 
 @Injectable()
@@ -23,14 +23,14 @@ export class IngredientService {
 
   url = 'https://api.ynov.jcatania.io/ingredient';
 
-  addIngredient(ingredient: Ingredient): Observable<any> {
+  addIngredient(ingredient: Ingredient): Observable<Ingredient> {
     return this.http.post<Ingredient>(this.url, ingredient, this.httpHeader)
       .pipe(
         catchError(this.handleError<Ingredient>('Add Ingredient'))
       );
   }
 
-  getIngredient(id): Observable<Ingredient[]> {
+  getIngredient(id: string): Observable<Ingredient[]> {
     return this.http.get<Ingredient[]>(this.url + id)
       .pipe(
         tap(_ => console.log(`Ingredient fetched: ${id}`)),
@@ -46,16 +46,16 @@ export class IngredientService {
       );
   }
 
-  updateIngredient(id, ingredient: Ingredient): Observable<any> {
-    return this.http.put(this.url + id, ingredient, this.httpHeader)
+  updateIngredient(ingredient: Ingredient): Observable<any> {
+    return this.http.put(this.url + '/' + ingredient.id, ingredient, this.httpHeader)
       .pipe(
-        tap(_ => console.log(`Ingredient updated: ${id}`)),
+        tap(_ => console.log(`Ingredient updated: ${ingredient.id}`)),
         catchError(this.handleError<Ingredient[]>('Update ingredient'))
       );
   }
 
-  deleteIngredient(id): Observable<Ingredient[]> {
-    return this.http.delete<Ingredient[]>(this.url + id, this.httpHeader)
+  deleteIngredient(id: string): Observable<Ingredient[]> {
+    return this.http.delete<Ingredient[]>(this.url + '/' + id, this.httpHeader)
       .pipe(
         tap(_ => console.log(`Ingredient deleted: ${id}`)),
         catchError(this.handleError<Ingredient[]>('Delete ingredient'))

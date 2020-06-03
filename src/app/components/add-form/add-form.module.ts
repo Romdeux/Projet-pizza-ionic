@@ -7,6 +7,8 @@ import { IonicModule } from '@ionic/angular';
 import { AddFormPageRoutingModule } from './add-form-routing.module';
 
 import { AddFormPage } from './add-form.page';
+import { PizzaService } from 'src/app/services/pizzas/pizza.service';
+import { IngredientService } from 'src/app/services/ingredients/ingredient.service';
 
 @NgModule({
   imports: [
@@ -15,6 +17,10 @@ import { AddFormPage } from './add-form.page';
     IonicModule,
     AddFormPageRoutingModule
   ],
-  declarations: [AddFormPage]
+  declarations: [AddFormPage],
+  providers: [
+    PizzaService,
+    IngredientService
+  ]
 })
-export class AddFormPageModule {}
+export class AddFormPageModule { }

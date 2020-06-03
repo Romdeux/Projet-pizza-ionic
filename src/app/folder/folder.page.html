@@ -5,10 +5,30 @@
     </ion-buttons>
     <ion-title>{{ folder }}</ion-title>
   </ion-toolbar>
-  <ion-fab-button (click)="presentModal()" class=" cart_button">
-    <ion-badge color="primary">11</ion-badge>
-    <ion-icon name="cart-outline"></ion-icon>
-  </ion-fab-button>
+  <ion-content>
+    <ion-fab vertical="top" horizontal="end" slot="fixed">
+      <ion-fab-button (click)="openCart()" #cart>
+        <div class="cart-length">{{ cartItemCount | async }}</div>
+        <ion-icon name="cart" class="cart-icon"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
+    <ion-list>
+      <ion-card *ngFor="let p of products">
+        <ion-card-header>
+          <ion-card-title>{{ p.name }}</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <ion-row class="ion-align-items-center">
+            <ion-col size="8">
+              <ion-label color="secondary">
+                <b>{{ p.price | currency:'USD' }}</b>
+              </ion-label>
+            </ion-col>
+          </ion-row>
+        </ion-card-content>
+      </ion-card>
+    </ion-list>
+  </ion-content>
 </ion-header>
 
 <ion-content [fullscreen]="true">

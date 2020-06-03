@@ -20,9 +20,14 @@ const routes: Routes = [
     loadChildren: () => import('./admin/admin.module').then(m => m.AdminPageModule)
   },
   {
-    path: 'add-form',
-    loadChildren: () => import('./components/add-form/add-form.module').then( m => m.AddFormPageModule)
+    path: 'add-form/:id',
+    loadChildren: () => import('./components/add-form/add-form.module').then(m => m.AddFormPageModule)
+  },
+  {
+    path: 'cart-modal',
+    loadChildren: () => import('./components/cart-modal/cart-modal.module').then(m => m.CartModalPageModule)
   }
+
 
 ];
 

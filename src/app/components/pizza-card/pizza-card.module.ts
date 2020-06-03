@@ -10,6 +10,7 @@ import { IonicModule } from '@ionic/angular';
 
 import { PizzaModalComponent } from '../pizza-modal/pizza-modal.component';
 import { RouterModule } from '@angular/router';
+import { CartService } from 'src/app/services/cart/cart.service';
 
 @NgModule({
     imports: [
@@ -27,5 +28,6 @@ import { RouterModule } from '@angular/router';
     ],
     declarations: [PizzaCardComponent],
     exports: [PizzaCardComponent],
+    providers: [CartService]
 })
 export class PizzaCardModule { }

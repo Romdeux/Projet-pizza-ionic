@@ -20,7 +20,7 @@ export class AdminPage implements OnInit {
   error: string;
   loading: boolean;
   @Input() pizza: Pizza;
-  // ingredient: Ingredient["name"];
+  newIngredient: Ingredient = { id: undefined, nom: undefined };
 
   constructor(
     private pizzaService: PizzaService,
@@ -39,11 +39,12 @@ export class AdminPage implements OnInit {
     this.error = '';
   }
 
-  async presentModal(pizza: Pizza): Promise<void> {
+  async presentModal(item: Pizza | Ingredient, isIngredient?: boolean): Promise<void> {
     const modal = await this.modalController.create({
       component: DeleteModalComponent,
       componentProps: {
-        "pizza": pizza,
+        "item": item,
+        "isIngredient": isIngredient,
       },
       cssClass: 'delete-modal'
       // componentProps: { accounts: this.accountList },
@@ -63,24 +64,19 @@ export class AdminPage implements OnInit {
     this.loading = false;
   }
 
-  editPizza(pizza: Pizza) {
+  // editPizza(pizza: Pizza) {
+  //   let pizzaStringify = JSON.stringify(pizza);
+  //   let navigationExtras: NavigationExtras = {
+  //     queryParams: {
+  //       "pizza": pizzaStringify
+  //     }
+  //   };
+  //   this.router.navigate(["/add-form"], navigationExtras);
+  // }
 
-    let pizzaStringify = JSON.stringify(pizza);
-    let navigationExtras: NavigationExtras = {
-      queryParams: {
-        "pizza": pizzaStringify
-      }
-    };
-    this.router.navigate(["/add-form"], navigationExtras);
-  }
-
-  addIngredient(ingredient: Ingredient) {
-    console.log(ingredient);
-    this.ingredientsService.addIngredient(ingredient);
-  }
-
-  deleteIngredient(ingredient: Ingredient) {
-    this.ingredientsService.deleteIngredient(ingredient.id)
+  async addIngredient() {
+    await this.ingredientsService.addIngredient(this.newIngredient).toPromise();
+    this.ngOnInit();
   }
 
 }

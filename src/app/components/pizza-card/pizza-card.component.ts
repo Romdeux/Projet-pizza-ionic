@@ -1,8 +1,10 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 import { PizzaModalComponent } from '../pizza-modal/pizza-modal.component';
 import { PizzaService, Pizza } from '../../services/pizzas/pizza.service';
+import { CartService } from 'src/app/services/cart/cart.service';
+import { CartModalPage } from '../cart-modal/cart-modal.page';
 
 @Component({
     selector: 'app-pizza-card',
@@ -14,12 +16,20 @@ export class PizzaCardComponent implements OnInit {
     @Input() pizza: Pizza;
     @Input() showPizzaId: string;
     folder: string;
+    cartItemCount: number;
 
-    constructor(private pizzaService: PizzaService, private activatedRoute: ActivatedRoute, public modalController: ModalController) { }
+
+    @ViewChild('cart', { static: false, read: ElementRef }) fab: ElementRef;
+
+
+    constructor(private pizzaService: PizzaService,
+        private cartService: CartService,
+        private activatedRoute: ActivatedRoute, public modalController: ModalController) { }
 
     async presentModal(): Promise<void> {
         const modal = await this.modalController.create({
             component: PizzaModalComponent,
+            swipeToClose: true,
             componentProps: {
                 "pizza": this.pizza,
             }
@@ -35,10 +45,10 @@ export class PizzaCardComponent implements OnInit {
         }
     }
 
-    pizzaQty: number = 0;
+    addToCart(pizza: Pizza) {
+        this.cartService.addProduct(pizza);
+        // this.cartItemCount = this.cartService.getCartItemCount();
 
-    addPizza() {
-        this.pizzaQty += 1;
     }
 
 }

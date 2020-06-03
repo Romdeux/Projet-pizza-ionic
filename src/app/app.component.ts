@@ -15,35 +15,35 @@ export class AppComponent implements OnInit {
     {
       title: 'Pizz\'App',
       url: '/folder/Inbox',
-      icon: 'mail'
+      icon: 'pizza'
     },
-    {
-      title: 'Outbox',
-      url: '/folder/Outbox',
-      icon: 'paper-plane'
-    },
+    // {
+    //   title: 'Outbox',
+    //   url: '/folder/Outbox',
+    //   icon: 'paper-plane'
+    // },
     {
       title: 'Favorites',
       url: '/folder/Favorites',
       icon: 'heart'
     },
+    // {
+    //   title: 'Archived',
+    //   url: '/folder/Archived',
+    //   icon: 'archive'
+    // },
+    // {
+    //   title: 'Trash',
+    //   url: '/folder/Trash',
+    //   icon: 'trash'
+    // },
     {
-      title: 'Archived',
-      url: '/folder/Archived',
-      icon: 'archive'
-    },
-    {
-      title: 'Trash',
-      url: '/folder/Trash',
-      icon: 'trash'
-    },
-    {
-      title: 'Spam',
-      url: '/folder/Spam',
-      icon: 'warning'
+      title: 'admin',
+      url: '/admin',
+      icon: 'person'
     }
   ];
-  public labels = ['Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders'];
+  public labels = ['Vegan', 'Cheese', 'MozzaCrust', 'Chicken'];
 
   constructor(
     private platform: Platform,

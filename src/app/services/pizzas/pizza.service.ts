@@ -11,8 +11,8 @@ export class Pizza {
   id: string;
   name: string;
   photo: string;
-  prix: string;
-  ingredients: [];
+  prix: number;
+  ingredients: string[];
 }
 
 @Injectable()
@@ -26,18 +26,25 @@ export class PizzaService {
 
   url = 'https://api.ynov.jcatania.io/pizza';
 
-  addPizza(pizza: Pizza): Observable<any> {
+  addPizza(pizza: Pizza): Observable<Pizza> {
     return this.http.post<Pizza>(this.url, pizza, this.httpHeader)
       .pipe(
         catchError(this.handleError<Pizza>('Add Pizza'))
       );
   }
 
-  getPizza(id): Observable<Pizza[]> {
-    return this.http.get<Pizza[]>(this.url + id)
+  // createOrUpdate(pizza: Pizza): Observable<Pizza> {
+  //   return this.http.patch<Pizza>(this.url + (pizza.id ? '/' + pizza.id : ''), pizza, this.httpHeader)
+  //     .pipe(
+  //       catchError(this.handleError<Pizza>('Create or Update Pizza'))
+  //     );
+  // }
+
+  getPizza(id: string): Observable<Pizza> {
+    return this.http.get<Pizza>(this.url + '/' + id)
       .pipe(
         tap(_ => console.log(`Pizza fetched: ${id}`)),
-        catchError(this.handleError<Pizza[]>(`Get pizza id=${id}`))
+        catchError(this.handleError<Pizza>(`Get pizza id=${id}`))
       );
   }
 
@@ -49,19 +56,19 @@ export class PizzaService {
       );
   }
 
-  updatePizza(id, pizza: Pizza): Observable<any> {
-    return this.http.put(this.url + id, pizza, this.httpHeader)
+  updatePizza(pizza: Pizza): Observable<Pizza> {
+    return this.http.put<Pizza>(this.url + '/' + pizza.id, pizza, this.httpHeader)
       .pipe(
-        tap(_ => console.log(`Pizza updated: ${id}`)),
-        catchError(this.handleError<Pizza[]>('Update pizza'))
+        tap(_ => console.log(`Pizza updated: ${pizza.id}`)),
+        catchError(this.handleError<Pizza>('Update pizza'))
       );
   }
 
-  deletePizza(id): Observable<Pizza[]> {
-    return this.http.delete<Pizza[]>(this.url + id, this.httpHeader)
+  deletePizza(id: string) {
+    return this.http.delete(this.url + '/' + id, this.httpHeader)
       .pipe(
         tap(_ => console.log(`Pizza deleted: ${id}`)),
-        catchError(this.handleError<Pizza[]>('Delete pizza'))
+        catchError(this.handleError('Delete pizza'))
       );
   }
 

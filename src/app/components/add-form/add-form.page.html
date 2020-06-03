@@ -10,25 +10,22 @@
 </ion-header>
 
 <ion-content>
-  <form action="">
+  <form (ngSubmit)="save()" *ngIf="pizza">
     <ion-item>
       <ion-label position="floating">Nom</ion-label>
-      <ion-input value="{{ pizza ? pizza.nom : '' }}"> </ion-input>
+      <ion-input [(ngModel)]="pizza.nom" name="nom"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label position="floating">Photo</ion-label>
-      <ion-input value="{{ pizza ? pizza.photo : '' }}"></ion-input>
+      <ion-input [(ngModel)]="pizza.photo" name="photo"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label position="floating">Prix</ion-label>
-      <ion-input value="{{ pizza ? pizza.prix : '' }}" type="number"></ion-input>
+      <ion-input [(ngModel)]="pizza.prix" name="prix" type="number"></ion-input>
     </ion-item>
 
-    <ion-item>
-      <ion-label class="title">Ingredients</ion-label>
-    </ion-item>
     <ion-list *ngIf="pizza">
-      <ion-item>
+      <!-- <ion-item>
         <ion-label class="title">Ingrédients actuels</ion-label>
       </ion-item>
       <ion-item class="ingredients" *ngFor="let ingredientPizza of pizza.ingredients">
@@ -41,13 +38,21 @@
       <ion-item>
         <ion-label class="title">Ingrédients disponibles</ion-label>
       </ion-item>
-      <ion-item class="ingredients" *ngFor="let ingredient of ingredients">
-        <ion-label>{{ ingredient.nom }}</ion-label>
-        <ion-checkbox name="ingredient" slot="end" [(ngModel)]="ingredient.isChecked"></ion-checkbox>
+      <ion-item class="ingredients" *ngFor="let item of ingredientsWrapper">
+        <ion-label>{{ item.ingredient.nom }}</ion-label>
+        <ion-checkbox name="ingredient" slot="end" [(ngModel)]="item.isChecked"></ion-checkbox>
+      </ion-item> -->
+      <ion-item>
+        <ion-label class="title">Ingrédients</ion-label>
+      </ion-item>
+      <ion-item class="ingredients" *ngFor="let item of ingredientsWrapper">
+        <ion-label>{{ item.ingredient.nom }}</ion-label>
+        <ion-checkbox [name]="'ingredient_' + item.ingredient.id" slot="end" [(ngModel)]="item.isChecked">
+        </ion-checkbox>
       </ion-item>
     </ion-list>
 
-    <ion-button color="primary" slot="end">
+    <ion-button color="primary" slot="end" type="submit">
       Valider
     </ion-button>
   </form>

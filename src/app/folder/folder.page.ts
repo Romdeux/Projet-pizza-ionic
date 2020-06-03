@@ -1,14 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 
 import { ShoppingCartComponent } from '../components/shopping-cart/shopping-cart.component';
 import { PizzaService, Pizza } from '../services/pizzas/pizza.service';
 
 import { LoadingController } from '@ionic/angular';
+import { CartService } from '../services/cart/cart.service';
+import { CartModalPage } from '../components/cart-modal/cart-modal.page';
 
 @Component({
   selector: 'app-folder',
@@ -23,12 +25,19 @@ export class FolderPage implements OnInit {
   loading: boolean;
   pizzaId: string;
 
+  cart = [];
+  products = [];
+  cartItemCount: BehaviorSubject<number>;
+  getCartItemCount: number;
+
+  @ViewChild('cart', { static: false, read: ElementRef }) fab: ElementRef;
+
   constructor(
     private pizzaService: PizzaService,
     private activatedRoute: ActivatedRoute,
     public loadingController: LoadingController,
     public modalController: ModalController,
-    private http: HttpClient,
+    private cartService: CartService
   ) {
     this.activatedRoute.params.subscribe((params) => {
       this.pizzaId = params.id;
@@ -44,61 +53,51 @@ export class FolderPage implements OnInit {
     return await modal.present();
   }
 
-  async ngOnInit() {
+  public async ngOnInit() {
+
+    this.cart = this.cartService.getCart();
     this.folder = this.activatedRoute.snapshot.paramMap.get('id');
 
     this.loading = true;
+
+    this.getCartItemCount = this.cartService.getCartItemCount().length;
 
     this.pizzas = await this.pizzaService.getPizzaList().toPromise();
 
     this.loading = false;
 
-    // this.pizzaService.getPizzaList().subscribe(result => {
-    //   this.pizzas = result;
-    //   console.log(this.pizzas);
-    // })
   }
 
+  getCartItemNumber() {
+    // this.cartItemCount = this.getCartItemCount;
+  }
 
+  async openCart() {
+    this.animateCSS('bounceOutLeft', true);
 
-  // async ionViewWillEnter() {
-  //   // Present a loading controller until the data is loaded
-  //   await this.presentLoading();
-  //   // Load the data
-  //   this.prepareDataRequest()
-  //     .pipe(
-  //       finalize(async () => {
-  //         // Hide the loading spinner on success or error
-  //         await this.loading.dismiss();
-  //       })
-  //     )
-  //     .subscribe(
-  //       data => {
-  //         // Set the data to display in the template
-  //         this.pizzas = data;
-  //         console.log(data);
-  //       },
-  //       err => {
-  //         // Set the error information to display in the template
-  //         this.error = `An error occurred, the data could not be retrieved: Status: ${err.status}, Message: ${err.statusText}`;
-  //       }
-  //     );
-  // }
+    let modal = await this.modalController.create({
+      component: CartModalPage,
+      cssClass: 'cart-modal'
+    });
+    modal.onWillDismiss().then(() => {
+      this.fab.nativeElement.classList.remove('animated', 'bounceOutLeft')
+      this.animateCSS('bounceInLeft');
+    });
+    modal.present();
+  }
 
-  // async presentLoading() {
-  //   // Prepare a loading controller
-  //   this.loading = await this.loadingController.create({
-  //     message: 'Loading...'
-  //   });
-  //   // Present the loading controller
-  //   await this.loading.present();
-  // }
+  animateCSS(animationName, keepAnimated = false) {
+    const node = this.fab.nativeElement;
+    node.classList.add('animated', animationName)
 
-  // private prepareDataRequest(): Observable<object> {
-  //   // Define the data URL
-  //   const dataUrl = 'https://api.ynov.jcatania.io/pizza';
-  //   // Prepare the request
-  //   return this.http.get(dataUrl);
-  // }
+    //https://github.com/daneden/animate.css
+    function handleAnimationEnd() {
+      if (!keepAnimated) {
+        node.classList.remove('animated', animationName);
+      }
+      node.removeEventListener('animationend', handleAnimationEnd)
+    }
+    node.addEventListener('animationend', handleAnimationEnd)
+  }
 
 }

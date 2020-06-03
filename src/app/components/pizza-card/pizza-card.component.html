@@ -1,8 +1,13 @@
 <ion-card>
-    <div class="add-pizza">
-        <ion-label>{{ pizzaQty }}</ion-label>
-        <ion-button (click)="addPizza()" fill="outline">Add</ion-button>
-    </div>
+    <ion-card-content>
+        <ion-row class="ion-align-items-center">
+            <ion-col size="4" class="ion-text-right">
+                <ion-button color="primary" fill="solid" (click)="addToCart(pizza)">
+                    Ajouter au panier
+                </ion-button>
+            </ion-col>
+        </ion-row>
+    </ion-card-content>
 
     <div (click)="presentModal()">
         <img [src]="pizza.photo" />

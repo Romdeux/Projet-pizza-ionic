@@ -1,10 +1,10 @@
 <ion-content>
   <div class="content">
-    <div *ngIf="pizza.nom">
-      Etes-vous sûr de vouloir supprimer {{ pizza.nom }}?
+    <div *ngIf="item">
+      Etes-vous sûr de vouloir supprimer {{ item.nom }}?
     </div>
     <div>
-      <ion-button color="danger">Oui</ion-button>
+      <ion-button color="danger" (click)="delete()">Oui</ion-button>
       <ion-button color="light" (click)="closeModal()">Non</ion-button>
     </div>
   </div>
